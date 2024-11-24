@@ -90,16 +90,14 @@ def registration(request):
     return JsonResponse(data)
 
 
-# Update the `get_dealerships` view to render the index page with
-# a list of dealerships
+# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"):
-    if state == "All":
+    if(state == "All"):
         endpoint = "/fetchDealers"
     else:
-        endpoint = f"/fetchDealers/{state}"
+        endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)
-    return JsonResponse({"status": 200, "dealers": dealerships})
-
+    return JsonResponse({"status":200,"dealers":dealerships})
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 def get_dealer_reviews(request, dealer_id):
@@ -128,13 +126,13 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request):
-    if not request.user.is_anonymous:
+    if(request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
-            post_review(data)
-            return JsonResponse({"status": 200})
-        except Exception as err:
-            return JsonResponse({"status": 401,
-                                 "message": f"Error in posting review: {err}"})
+            response = post_review(data)
+            return JsonResponse({"status":200})
+        except:
+            return JsonResponse({"status":401,"message":"Error in posting review"})
     else:
-        return JsonResponse({"status": 403, "message": "Unauthorized"})
+        return JsonResponse({"status":403,"message":"Unauthorized"})
+
