@@ -1,44 +1,44 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
 const reviews = new Schema({
-    id: {
-        type: Number,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    dealership: {
-        type: Number,
-        required: true,
-    },
-    review: {
-        type: String,
-        required: true
-    },
-    purchase: {
-        type: Boolean,
-        required: true
-    },
-    purchase_date: {
-        type: String,
-        required: true
-    },
-    car_make: {
-        type: String,
-        required: true
-    },
-    car_model: {
-        type: String,
-        required: true
-    },
-    car_year: {
-        type: Number,
-        required: true
-    },
+  id: {
+    type: Number,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  dealership: {
+    type: Number,
+    required: true
+  },
+  review: {
+    type: String,
+    required: true
+  },
+  purchase: {
+    type: Boolean,
+    required: true
+  },
+  purchase_date: {
+    type: String,
+    required: true
+  },
+  car_make: {
+    type: String,
+    required: true
+  },
+  car_model: {
+    type: String,
+    required: true
+  },
+  car_year: {
+    type: Number,
+    required: true
+  }
 });
 
-export default mongoose.model('reviews', reviews);
+export default mongoose.model("reviews", reviews);
