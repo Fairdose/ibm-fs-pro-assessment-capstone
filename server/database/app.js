@@ -11,7 +11,7 @@ const app = express();
 const port = 3030;
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false })); // Use named imports for body-parser
+app.use(bodyParser.urlencoded({extended: false})); // Use named imports for body-parser
 
 // Read JSON files using async/await
 let reviews_data;
@@ -29,7 +29,7 @@ mongoose.set('debug', true);
 
 // Connect to MongoDB
 try {
-    await mongoose.connect("mongodb://127.0.0.1:27017", {
+    await mongoose.connect("mongodb://mongo_db:27017/", {
         dbName: 'dealershipsDB',
         useUnifiedTopology: true,
         serverSelectionTimeoutMS: 30000,
@@ -42,7 +42,7 @@ try {
     console.log("Reviews initialized");
 
     await Dealerships.deleteMany({});
-    await Dealerships.insertMany(dealerships_data['dealerships']);
+    await Dealerships.insertMany(dealerships_data.dealerships);
     console.log("Dealerships initialized");
 } catch (error) {
     console.error("Error connecting to MongoDB or initializing data:", error);
@@ -60,7 +60,7 @@ app.get('/fetchReviews', async (req, res) => {
         const documents = await Reviews.find();
         res.json(documents);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        res.status(500).json({error: 'Error fetching documents'});
     }
 });
 
@@ -68,10 +68,10 @@ app.get('/fetchReviews', async (req, res) => {
 app.get('/fetchReviews/dealer/:id', async (req, res) => {
     console.log('fetch dealer')
     try {
-        const documents = await Reviews.find({ dealership: req.params.id });
+        const documents = await Reviews.find({dealership: req.params.id});
         res.json(documents);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        res.status(500).json({error: 'Error fetching documents'});
     }
 });
 
@@ -82,39 +82,39 @@ app.get('/fetchDealers', async (req, res) => {
         const dealers = await Dealerships.find({});
         res.json(dealers);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        res.status(500).json({error: 'Error fetching documents'});
     }
 });
 
 // Express route to fetch Dealers by a particular state
 app.get('/fetchDealers/:state', async (req, res) => {
-    const { state } = req.params;
+    const {state} = req.params;
     console.log('fetch dealer by state')
 
     try {
-        const dealers = await Dealerships.find({ state });
+        const dealers = await Dealerships.find({state});
         res.json(dealers);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        res.status(500).json({error: 'Error fetching documents'});
     }
 });
 
 // Express route to fetch dealer by a particular id
 app.get('/fetchDealer/:id', async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     try {
-        const dealers = await Dealerships.find({ id });
+        const dealers = await Dealerships.find({id});
         res.json(dealers);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        res.status(500).json({error: 'Error fetching documents'});
     }
 });
 
 // Express route to insert review
-app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
+app.post('/insert_review', express.raw({type: '*/*'}), async (req, res) => {
     const data = JSON.parse(req.body);
-    const documents = await Reviews.find().sort({ id: -1 });
+    const documents = await Reviews.find().sort({id: -1});
     const new_id = documents[0]?.id + 1 || 1; // Default to 1 if no reviews exist
 
     const review = new Reviews({
@@ -134,7 +134,7 @@ app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
         res.json(savedReview);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error inserting review' });
+        res.status(500).json({error: 'Error inserting review'});
     }
 });
 

@@ -54,6 +54,6 @@ jobs:
 
       - name: Run Linter
         run: |
-          echo '{ "esversion": 8, "asi": true, "node": true }' > jshint-config.json
+          echo '{"esversion":11,"asi":true,"node":true,"undef":true,"unused":true,"expr":true,"sub":true,"quotmark":"double","boss":true,"loopfunc":true,"browser":false,"globals":{"fs":true}}' > jshint-config.json
           find ./server/database -name app.js -exec jshint --config jshint-config.json {} +
           echo "Linted all the js files successfully"
