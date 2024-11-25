@@ -1,5 +1,5 @@
-const {Int32} = require('mongodb');
-const mongoose = require('mongoose');
+import {Int32} from 'mongodb'
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
@@ -30,4 +30,4 @@ const cars = new Schema({
     }
 });
 
-module.exports = mongoose.model('cars', cars);
+export default mongoose.model('cars', cars);
