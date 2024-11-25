@@ -22,6 +22,8 @@ const PostReview = () => {
     let carmodels_url = root_url + `djangoapp/get_cars`;
 
     const postreview = async () => {
+        const {[1] : csrftoken} = document.cookie.split('=')
+
         let name = sessionStorage.getItem("firstname") + " " + sessionStorage.getItem("lastname");
         //If the first and second name are stores as null, use the username
         if (name.includes("null")) {
@@ -51,6 +53,7 @@ const PostReview = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
             },
             body: jsoninput,
         });
