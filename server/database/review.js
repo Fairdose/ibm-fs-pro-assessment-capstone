@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
 const reviews = new Schema({
-  id: {
+	id: {
     type: Number,
-    required: true
-  },
-  name: {
+    required: true,
+	},
+	name: {
     type: String,
     required: true
   },
   dealership: {
     type: Number,
-    required: true
+    required: true,
   },
   review: {
     type: String,
@@ -38,7 +38,7 @@ const reviews = new Schema({
   car_year: {
     type: Number,
     required: true
-  }
+  },
 });
 
-export default mongoose.model("reviews", reviews);
+module.exports = mongoose.model('reviews', reviews);
